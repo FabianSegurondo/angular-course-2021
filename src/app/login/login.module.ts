@@ -11,11 +11,11 @@ import {SingletonService} from "./services/singleton.service";
 import { Login1Component } from './components/login1/login1.component';
 import { Login2Component } from './components/login2/login2.component';
 import {UtilsService} from "./services/utils.service";
+import {PublicationService} from "./services/publication.service";
 
 const routes: Routes = [
   {path: '', component: LoginComponent}
 ]
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -33,7 +33,8 @@ const routes: Routes = [
   ],
   providers: [
     Test1Service,
-    UtilsService
+    UtilsService,
+    PublicationService
   ]
 })
 export class LoginModule { }
