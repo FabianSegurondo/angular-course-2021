@@ -6,6 +6,8 @@ import {RouterModule, Routes} from "@angular/router";
 
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
+import {SingletonService} from "./login/services/singleton.service";
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -23,7 +25,9 @@ const routes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
