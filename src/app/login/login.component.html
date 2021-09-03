@@ -23,7 +23,18 @@
 <input type="text"  [(ngModel)]="cccccccc">
 <button (click)="adasd()">submit</button>-->
 
+<p>---------REACTIVE FORMS------------------</p>
 
+<input type="text" [formControl]="name">
+<button (click)="onShow()">SHOW</button>
+
+
+<div [formGroup]="formReactive">
+  <input type="text" formControlName="name">
+  <input type="text" formControlName="lastName">
+  <input type="text" formControlName="date">
+</div>
+<button (click)="onShowAll()">SHOW ALL</button>
 
 
 
