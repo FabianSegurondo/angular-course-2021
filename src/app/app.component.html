@@ -1,0 +1,31 @@
+<p>2 BITCOIN-ETHERUM</p>
+<div *ngIf="transLeft()">
+<h2>
+  THERE ARE NOT TRANSACTIONS
+</h2>
+</div>
+<p>ETH {{eth}}</p>
+<p>BTC {{btc}}</p>
+<div>WALLETS</div>
+<div style="display: flex; flex-direction: row">
+<div *ngFor="let wallet of wallets">
+  <wallets [id]="wallet[0]" [wallet]="wallet[1]['wallet']" [name]="wallet[1]['name']" [eth]="wallet[1]['eth']" [btc]="wallet[1]['btc']">
+
+  </wallets>
+</div>
+</div>
+
+<div>TRANSACTIONS</div>
+<div style="display: flex; flex-direction: row">
+<div *ngFor="let transactions of transactions">
+  <transactions [id]="transactions[0]" [date]="transactions[1]['date']" [from]="transactions[1]['from']"  [to]="transactions[1]['to']"  [quantity]="transactions[1]['quantity']"  [moneyType]="transactions[1]['moneyType']"  [mineType]="transactions[1]['mineType']"  [miner]="transactions[1]['miner']" >
+  <button
+  [disabled]="transactions[1]['mineType'] === 'PoS' &&
+  transactions[1]['miner'] < 20"
+(click)="onMine(transactions[0], transactions[1]['from'], transactions[1]['to'], transactions[1]['quantity'], transactions[1]['moneyType'])">
+  mine
+</button>
+
+  </transactions>
+</div>
+</div>
