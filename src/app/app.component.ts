@@ -1,5 +1,5 @@
 import { Component, VERSION } from '@angular/core';
-import { FetcherService } from './fetcher.service';
+import { MinarService } from './minar.service';
 
 @Component({
   selector: 'my-app',
@@ -15,11 +15,11 @@ export class AppComponent  {
   eth = 0
   anyLeft = true;
 
-  constructor(private fetcher:FetcherService) { 
+  constructor(private fetcher:MinarService) { 
     //console.log(this.fetcher.getAllWallets().subscribe(res => console.log(res)))
     //console.log(this.fetcher.getAllTrans().subscribe(res => console.log(res)))
-    this.fetcher.getAllWallets().subscribe(data => this.getDataWallets(data))
-    this.fetcher.getAllTrans().subscribe(data => this.getDataTrans(data))
+    this.fetcher.getWallets().subscribe(data => this.getDataWallets(data))
+    this.fetcher.getTransactions().subscribe(data => this.getDataTransactions(data))
   }
 
   getDataWallets(data){
@@ -28,7 +28,7 @@ export class AppComponent  {
     this.updateTotalMoney()
   }
 
-  getDataTrans(data){
+  getDataTransactions(data){
 
     this.transactions=Object.entries(data);
     this.transLeft()
@@ -56,8 +56,8 @@ export class AppComponent  {
     }
 
     this.fetcher.delete(idTrans).subscribe(res=>console.log(res))
-    this.fetcher.getAllWallets().subscribe(data => this.getDataWallets(data))
-    this.fetcher.getAllTrans().subscribe(data => this.getDataTrans(data))
+    this.fetcher.getWallets().subscribe(data => this.getDataWallets(data))
+    this.fetcher.getTransactions().subscribe(data => this.getDataTransactions(data))
 
 
     window.location.reload();
