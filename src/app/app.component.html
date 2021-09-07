@@ -18,7 +18,7 @@
 <div>TRANSACTIONS</div>
 <div style="display: flex; flex-direction: row">
 <div *ngFor="let transactions of transactions">
-  <transactions [id]="transactions[0]" [date]="transactions[1]['date']" [from]="transactions[1]['from']"  [to]="transactions[1]['to']"  [quantity]="transactions[1]['quantity']"  [moneyType]="transactions[1]['moneyType']"  [mineType]="transactions[1]['mineType']"  [miner]="transactions[1]['miner']" >
+  <transactions [id]="transactions[0]" [date]="(transactions[1]['date'] | strToDate)|date:'dd/MM/yyyy'" [from]="transactions[1]['from']"  [to]="transactions[1]['to']"  [quantity]="transactions[1]['quantity']"  [moneyType]="transactions[1]['moneyType']"  [mineType]="transactions[1]['mineType']"  [miner]="transactions[1]['miner']" >
   <button
   [disabled]="transactions[1]['mineType'] === 'PoS' &&
   transactions[1]['miner'] < 20"
