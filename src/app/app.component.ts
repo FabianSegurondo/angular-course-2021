@@ -58,7 +58,7 @@ export class AppComponent  {
     this.fetcher.getWallets().subscribe(data => this.getDataWallets(data))
     this.fetcher.getTransactions().subscribe(data => this.getDataTransactions(data))
 
-
+    this.updateTotalMoney();
     window.location.reload();
     
 
@@ -71,7 +71,7 @@ export class AppComponent  {
     for(var i in this.wallets){
       this.eth = this.wallets[i][1]["eth"] + this.eth
       this.btc = this.wallets[i][1]["btc"] + this.btc
-      console.log(this.btc)
+
     }
   }
 
