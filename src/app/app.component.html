@@ -22,8 +22,8 @@
   <button
   [disabled]="transactions[1]['mineType'] === 'PoS' &&
   transactions[1]['miner'] < 20"
-(click)="onMine(transactions[0], transactions[1]['from'], transactions[1]['to'], transactions[1]['quantity'], transactions[1]['moneyType'])">
-  mine
+(click)="onMine(transactions[0], transactions[1]['from'], transactions[1]['to'], transactions[1]['quantity'], transactions[1]['moneyType'])"
+>Mine
 </button>
 
   </transactions>

@@ -9,6 +9,7 @@ export class MinarService {
  
   urlW = "https://bitcoin-test-a0874-default-rtdb.firebaseio.com/wallets.json"
   urlT = "https://bitcoin-test-a0874-default-rtdb.firebaseio.com/transactions.json"
+
   constructor(private http: HttpClient) { }
 
   public getWallets():Observable<any>{
@@ -20,8 +21,7 @@ export class MinarService {
   }
 
   public delete(id: string): Observable<any>{
-    return this.http.delete(
-      `${this.urlT}/${id}.json`);
+    return this.http.delete(`${this.urlT}/${id}.json`);
   }
 
   public mineBTC(id:string,val):Observable<any>{

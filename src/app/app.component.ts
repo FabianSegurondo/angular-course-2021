@@ -16,8 +16,7 @@ export class AppComponent  {
   anyLeft = true;
 
   constructor(private fetcher:MinarService) { 
-    //console.log(this.fetcher.getAllWallets().subscribe(res => console.log(res)))
-    //console.log(this.fetcher.getAllTrans().subscribe(res => console.log(res)))
+ 
     this.fetcher.getWallets().subscribe(data => this.getDataWallets(data))
     this.fetcher.getTransactions().subscribe(data => this.getDataTransactions(data))
   }
@@ -63,8 +62,6 @@ export class AppComponent  {
     window.location.reload();
     
 
-
-   // this.fetcher.mine(personFrom[0][0],newQuantPerFrom,moneyType)
   }
 
   updateTotalMoney(){
