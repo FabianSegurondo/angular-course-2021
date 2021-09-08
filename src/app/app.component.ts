@@ -32,6 +32,20 @@ export class AppComponent  {
     this.transactions=Object.entries(data);
     this.transLeft()
   }
+  setTotalETH() {
+    this.totalETH = 0;
+    for (let i = 0; i < this.wallets.length; i++) {
+      this.totalETH += this.wallets[i][1]['eth'];
+    }
+    return this.totalETH;
+  }
+  setTotalBTC() {
+    this.totalBTC = 0;
+    for (let i = 0; i < this.wallets.length; i++) {
+      this.totalBTC += this.wallets[i][1]['btc'];
+    }
+    return this.totalBTC;
+  }
 
   printThis(){
     console.log(this.wallets)
