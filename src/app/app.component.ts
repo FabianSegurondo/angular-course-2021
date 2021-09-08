@@ -13,7 +13,7 @@ export class AppComponent  {
   transactions=[]
   btc = 0
   eth = 0
-  anyLeft = true;
+anyLeft = true;
 totalETH= 0;
 totalBTC= 0;
 
