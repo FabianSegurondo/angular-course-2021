@@ -1,41 +1,33 @@
-<p>BITCOIN-ETHERUM</p>
-<div *ngIf="transLeft()">
-<h2>
-  THERE ARE NOT TRANSACTIONS
-</h2>
-</div>
 
-<div 
+<button class="button buttonStyle1"
+        routerLink="client"
+        routerLinkActive="buttonStyle2">CLIENT</button>
 
-      [style.background]=" 'blue' "
-      style="position: absolute; top: 10px; right: 10px; font-family: sans-serif; font-size: 100% ; color: white;  margin: 10px; padding: 10px; "
->
-  Total ETH {{setTotalETH()}} 
-  <blockquote></blockquote>
-  Total BTC {{setTotalBTC()}}
-</div>
+<button class="button buttonStyle1"
+        routerLink="product"
+        routerLinkActive="buttonStyle2">PRODUCT</button>
 
 
-<div>WALLETS</div>
-<div style="display: flex; flex-direction: row">
-<div *ngFor="let wallet of wallets">
-  <wallets [id]="wallet[0]" [wallet]="wallet[1]['wallet']" [name]="wallet[1]['name']" [eth]="wallet[1]['eth']" [btc]="wallet[1]['btc']">
 
-  </wallets>
-</div>
-</div>
+<button class="button buttonStyle1"
+        routerLink="provider"
+        routerLinkActive="buttonStyle2">PROVIDER</button>
 
-<div>TRANSACTIONS</div>
-<div style="display: flex; flex-direction: row">
-<div *ngFor="let transactions of transactions">
-  <transactions [id]="transactions[0]" [date]="(transactions[1]['date'] | strToDate)|date:'dd/MM/yyyy'" [from]="transactions[1]['from']"  [to]="transactions[1]['to']"  [quantity]="transactions[1]['quantity']"  [moneyType]="transactions[1]['moneyType']"  [mineType]="transactions[1]['mineType']"  [miner]="transactions[1]['miner']" >
-  <button
-  [disabled]="transactions[1]['mineType'] === 'PoS' &&
-  transactions[1]['miner'] < 20"
-(click)="onMine(transactions[0], transactions[1]['from'], transactions[1]['to'], transactions[1]['quantity'], transactions[1]['moneyType'])"
->Mine
-</button>
 
-  </transactions>
-</div>
+
+<div style="
+  background-color:#009CBA; /* green */
+  border: none;
+  color: gray;
+  padding: 15px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: center;
+  font-size: 12px;
+  margin-right: 9px ;
+  margin-top: 5px;
+  font-family: sans-serif;
+  font-size:100%
+"> 
+        <router-outlet></router-outlet>
 </div>

@@ -1,16 +1,34 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import {RouterModule, Routes} from "@angular/router";
 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { WalletsComponent } from './wallets/wallets.component';
-import { TransactionsComponent } from './transactions/transactions.component';
-import { StrToDatePipe } from './str-to-date.pipe';
+import { ProviderComponent } from './provider/provider.component';
+
+
+const routes: Routes = [
+  {
+    path: 'provider', component: ProviderComponent
+  },
+  {
+    path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
+  },
+  {
+    path: 'client', loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
+  }
+];
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule,HttpClientModule ],
-  declarations: [ AppComponent, WalletsComponent, TransactionsComponent, StrToDatePipe ],
-  bootstrap:    [ AppComponent ]
+  declarations: [
+    AppComponent, 
+    ProviderComponent
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes)
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
