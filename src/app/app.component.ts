@@ -14,6 +14,8 @@ export class AppComponent  {
   btc = 0
   eth = 0
   anyLeft = true;
+totalETH= 0;
+totalBTC= 0;
 
   constructor(private fetcher:MinarService) { 
  
