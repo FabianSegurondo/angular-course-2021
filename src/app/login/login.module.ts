@@ -6,11 +6,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbButtonsModule, NgbToastModule} from "@ng-bootstrap/ng-bootstrap";
 import {MatSliderModule} from "@angular/material/slider";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-
 import {MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "./services/auth.service";
+import { RegisterComponent } from './components/register/register.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const routes: Routes = [
   {path: '', component: LoginComponent}
@@ -18,7 +19,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     MatProgressSpinnerModule,
@@ -31,7 +33,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatCardModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [
     AuthService

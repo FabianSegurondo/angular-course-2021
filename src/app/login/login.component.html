@@ -6,7 +6,6 @@
   </p>
 </div>
 <div class="right col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
   <mat-card class="form">
     <mat-card-content>
       <form #form="ngForm"
@@ -25,12 +24,12 @@
       </form>
 
       <div class="underline"></div>
-      <button class="create-new-account-btn" type="submit">
+      <button class="create-new-account-btn"
+              (click)="onCreateNewAccount()">
         Create New Account
       </button>
     </mat-card-content>
   </mat-card>
-
   <p><a href="">Create a Page</a> for celebrity, band or business.</p>
 </div>
 </div>
