@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {RouterModule, Routes} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {SingletonService} from "./login/services/singleton.service";
 import {HttpClientModule} from "@angular/common/http";
 
 
@@ -25,7 +24,6 @@ const routes: Routes = [
     HttpClientModule
   ],
   providers: [
-
   ],
   bootstrap: [AppComponent]
 })
