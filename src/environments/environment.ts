@@ -8,7 +8,8 @@ export const environment = {
   },
   auth: {
     apiBaseUrl: "https://identitytoolkit.googleapis.com",
-    key: "AIzaSyClc0dZu3CIhqkYEA1TNg6o-ecKmD_Fi2o"
+    key:
+      "AIzaSyClc0dZu3CIhqkYEA1TNg6o-ecKmD_Fi2o"
   }
 };
 
