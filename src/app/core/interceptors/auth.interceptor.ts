@@ -8,7 +8,6 @@ import {
 import {Observable, throwError} from 'rxjs';
 import {AuthService} from "../../login/services/auth.service";
 import {catchError} from "rxjs/operators";
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
@@ -16,15 +15,12 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.authService.getToken();
 
     if(token){
-      //let params = new HttpParams();
-      //params.append('auth', 'asdasdasdas')
-      //params.append('dgdfg', 'asdasdasdas')
-      //params.append('aughkhjkhjkth', 'asdasdasdas')
-
-      //console.log('PARAMS', params)
+      let params = new HttpParams();
+      params = params.append('auth', token);
 
       request = request.clone({
-        url: `${request.url}?auth=${token}`
+        url: `${request.url}`,
+        params
       });
     }
 
@@ -35,5 +31,4 @@ export class AuthInterceptor implements HttpInterceptor {
       })
     );
   }
-
 }
