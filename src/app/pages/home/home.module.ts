@@ -31,5 +31,6 @@ const routes: Routes = [
   ]
 })
 
-export class HomeModule {
+export class HomeModule
+{
 }
