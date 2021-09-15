@@ -3,19 +3,20 @@ import {AuthService} from "../core/services/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {RegisterComponent} from "./components/register/register.component";
 import {Router} from "@angular/router";
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-
   constructor(private authService: AuthService,
               private matDialog: MatDialog,
               private router: Router) {
   }
 
   ngOnInit(): void {
+    if(this.authService.verifyLogged()){
+      this.router.navigate(['pages']);
+    }
   }
 
   login(form:any){
@@ -28,9 +29,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['pages']);
     });
   }
-
   onCreateNewAccount(){
     this.matDialog.open(RegisterComponent)
   }
-
 }
