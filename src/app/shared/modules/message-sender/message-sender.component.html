@@ -6,7 +6,9 @@
     alt=""
   />
   <form>
-    <input class="messageSender__input" placeholder="What's on your mind?" type="text"/>
+    <input
+      (click)="onMessage()"
+      class="messageSender__input" placeholder="What's on your mind?" type="text"/>
   </form>
 </div>
 
@@ -15,12 +17,10 @@
     <span style="color: red" class="material-icons"> videocam </span>
     <h3>Live</h3>
   </div>
-
   <div class="messageSender__option">
     <span style="color: green" class="material-icons"> photo_library </span>
     <h3>Photo/Video</h3>
   </div>
-
   <div class="messageSender__option">
     <span style="color: orange" class="material-icons"> insert_emoticon </span>
     <h3>Feeling/Activity</h3>
