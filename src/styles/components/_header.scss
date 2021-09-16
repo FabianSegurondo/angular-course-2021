@@ -9,14 +9,18 @@
   box-shadow: 0 5px 8px -9px rgba(0, 0, 0, 0.75);
   color: black;
   height: 56px;
+
   .header__left {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+
     img {
       height: 40px;
     }
+
   }
+
   .header__input {
     display: flex;
     align-items: center;
@@ -24,38 +28,46 @@
     padding: 10px;
     margin-left: 10px;
     border-radius: 999px;
+
     input {
       border: none;
       background-color: transparent;
       outline-width: 0;
     }
   }
+
   .header__middle {
     display: flex;
     flex: 1;
     justify-content: center;
     height: 100%;
   }
+
   .header__option {
     width: 112px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
     .material-icons {
       font-size: xx-large;
       color: gray;
     }
   }
+
   .header__option:hover .material-icons {
     color: #2e81f4;
   }
+
   .header__option.active .material-icons {
     color: #2e81f4;
   }
+
   .header__option.active {
     border-bottom: 4px solid #2e81f4;
   }
+
   .header__option:hover {
     background-color: #eff2f5;
     border-radius: 10px;
@@ -63,20 +75,25 @@
     padding: 0 30px;
     border-bottom: none;
   }
+
   .header__info {
     display: flex;
     align-items: center;
+
     h4 {
       margin-left: 10px;
     }
   }
+
   .header__right {
     display: flex;
     align-items: center;
+
     .material-icons {
       color: gray;
       margin: 0 10px;
     }
+
     .material-icons:hover {
       cursor: pointer;
     }
@@ -91,6 +108,3 @@
     width: 45px;
   }
 }
-
-
-
