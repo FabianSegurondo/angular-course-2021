@@ -5,7 +5,6 @@ import {SharedMaterialModule} from "../../shared-material.module";
 import {PostMessageComponent} from "./components/post-message/post-message.component";
 import {FormsModule} from "@angular/forms";
 import {PublicationService} from "../../../pages/shared/services/publication.service";
-
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +21,8 @@ import {PublicationService} from "../../../pages/shared/services/publication.ser
   ],
   providers: [
     PublicationService
-  ]
+  ],
+  entryComponents: [PostMessageComponent],
 })
 
 export class MessageSenderModule {

@@ -5,11 +5,9 @@ import {RouterModule, Routes} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from './components/register/register.component';
 import {SharedMaterialModule} from "../shared/shared-material.module";
-
 const routes: Routes = [
   {path: '', component: LoginComponent}
 ]
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -21,7 +19,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     SharedMaterialModule
-  ]
+  ],
+  entryComponents: [RegisterComponent]
 })
 
 export class LoginModule {
