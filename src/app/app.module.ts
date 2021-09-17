@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
+
 import {AppComponent} from './app.component';
 import {RouterModule, Routes} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -9,7 +10,7 @@ import {AuthGuard} from "./core/guards/auth.guard";
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule)},
-  {path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard]}
+  {path: 'pages', loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)}
 ];
 
 @NgModule({
@@ -24,5 +25,6 @@ const routes: Routes = [
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }
