@@ -34,12 +34,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class FormComponent implements OnInit, OnChanges {
   unvaccinatedForm: FormGroup;
   @Input() values: any = {
-    name: '',
-    age: '',
-    date: '',
-    disease: '',
-    vaccineType: '',
-    doses: '',
+    name: '        ',
+    age: '        ',
+    date: '             ',
+    disease: '               ',
+    vaccineType: '            ',
+    doses: '              ',
   };
 
   @Output() sentForm = new EventEmitter<any>();
