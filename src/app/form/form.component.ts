@@ -12,8 +12,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-form',
   template: `
-    <form [formGroup]="unvaccinatedForm" style="display: flex; flex-direction: column; padding: 20px; background-color: black">
-      <p>Create/Update Unvaccinated</p>
+    <form [formGroup]="unvaccinatedForm" style="display: flex; flex-direction: column; padding: 20px; background-color: gray">
+      <p>Create/Edit Unvaccinated</p>
       <mat-form-field>
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" type="text"></mat-form-field>
