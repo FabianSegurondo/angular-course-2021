@@ -1,77 +1,149 @@
-
 import { Component } from '@angular/core';
-import { VacunadosService} from './servicios/vacunados.service' ;
+import { Subscription } from 'rxjs';
+import { NoVacunadosService } from './core/services/no-vacunados.service';
+import { VacunadosService } from './core/services/vacunados.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  vacunados=[];
-  unVacunados=[];
-  numVacunados=0;
-  numUnvacunados=0;
-  
-  constructor(private serv:VacunadosService){
-  this.vacunados=[]
-  this.unVacunados=[]
-  this.serv.getAllVac().subscribe(data => this.VacunadosDB(data))
-  this.serv.getAllUnvac().subscribe(data => this.UnvacunadosDB(data))
+  addMode = true;
+  idEdit: any;
+
+  formValues: any = {
+    name: '',
+    age: '',
+    date: '',
+    disease: '',
+    vaccineType: '',
+    doses: '',
+  };
+
+  vacunados: any[] = [];
+  noVacunados: any[] = [];
+
+  constructor(
+    private noVacunadosService: NoVacunadosService,
+    private vacunadosService: VacunadosService
+  ) {}
+
+  ngOnInit() {
+    this.loadVaccinated();
+    this.loadNotVaccinated();
   }
 
-  VacunadosDB(data:any){
-    this.vacunados=Object.entries(data);
-    this.checkState()
-    this.checkAllVac()
+  loadVaccinated() {
+    this.vacunados = [];
+
+    this.vacunadosService.getAll().subscribe(
+      (res) =>
+        (this.vacunados = Object.entries(res).map((s: any) => ({
+          id: s[0],
+          ...s[1],
+        })))
+    );
   }
 
-  UnvacunadosDB(data:any){
-    this.unVacunados=Object.entries(data);
-    this.checkState()
-    this.checkAllVac()
+  loadNotVaccinated() {
+    this.noVacunados = [];
+
+    this.noVacunadosService.getAll().subscribe(
+      (res) =>
+        (this.noVacunados = Object.entries(res).map((s: any) => ({
+          id: s[0],
+          ...s[1],
+        })))
+    );
   }
 
-  checkState(){
-    this.numVacunados=0
-    this.numUnvacunados=0
-    this.numVacunados=this.vacunados.length
-    this.numUnvacunados=this.unVacunados.length
+  todosEstanVacunados(): boolean {
+    const aux = this.noVacunados.filter(
+      (t) => (t.disease === false || t.disease === 'false') && t.age >= 12
+    );
+    return aux.length === 0;
   }
 
-  vacunar(id:any){
-    var personToBeVaccinated = this.unVacunados.find(person => person[0] === id)
-    console.log(personToBeVaccinated)
-    console.log(personToBeVaccinated[1]['doses'])
-    var currentDoses = personToBeVaccinated[1]['doses']+1
-    this.serv.updateVac(id,currentDoses).subscribe(res => console.log(res))
-
-    if(personToBeVaccinated[1]['vaccineType'] === "A" && currentDoses ===1){
-      this.serv.createPerson({"name":personToBeVaccinated[1]['name'],"age":personToBeVaccinated[1]['age'],"date":personToBeVaccinated[1]['date'],"disease":personToBeVaccinated[1]['disease'], "vaccineType":personToBeVaccinated[1]['vaccineType'],"vaccined":1,"doses":currentDoses}).subscribe(res => console.log(res))
-      this.serv.deletePerson(id).subscribe(res => console.log(res))
-    }else if(personToBeVaccinated[1]['vaccineType'] === "B"&& currentDoses ===2){
-      this.serv.createPerson({"name":personToBeVaccinated[1]['name'],"age":personToBeVaccinated[1]['age'],"date":personToBeVaccinated[1]['date'],"disease":personToBeVaccinated[1]['disease'], "vaccineType":personToBeVaccinated[1]['vaccineType'],"vaccined":1,"doses":currentDoses}).subscribe(res => console.log(res))
-      this.serv.deletePerson(id).subscribe(res => console.log(res))
-    }else if(personToBeVaccinated[1]['vaccineType'] === "C"&& currentDoses ===3){
-      this.serv.createPerson({"name":personToBeVaccinated[1]['name'],"age":personToBeVaccinated[1]['age'],"date":personToBeVaccinated[1]['date'],"disease":personToBeVaccinated[1]['disease'], "vaccineType":personToBeVaccinated[1]['vaccineType'],"vaccined":1,"doses":currentDoses}).subscribe(res => console.log(res))
-      this.serv.deletePerson(id).subscribe(res => console.log(res))
+  totalDeVacunas(type: number) {
+    if (type === 0) {
+      return this.vacunados.length;
+    } else {
+      return this.noVacunados.length;
     }
-    
-    this.vacunados=[]
-    this.unVacunados=[]
-
-    this.serv.getAllVac().subscribe(data => this.VacunadosDB(data))
-    this.serv.getAllUnvac().subscribe(data => this.UnvacunadosDB(data))
-    this.checkAllVac()
-    
-
-
-    window.location.reload();
   }
 
-  checkAllVac():boolean{
-    return this.unVacunados.find(person => person[1]['disease'] === false && person[1]['age'] >=18 ) !==undefined
+  vaccine(persona: any): void {
+    const vaccinatedAux = this.noVacunados.find((x) => x.name === persona.name);
+
+    console.log('Before: ', vaccinatedAux.doses);
+
+    vaccinatedAux[persona.doses] = persona.doses++;
+
+    this.noVacunadosService
+      .patchNoVacunados(vaccinatedAux.id, vaccinatedAux)
+      .subscribe((res) => this.loadNotVaccinated());
+
+    const tipoDeVacuna: string = persona.vaccineType;
+    console.log(persona.vaccineType);
+    console.log('After ', vaccinatedAux.doses);
+    console.log('Id', vaccinatedAux.id);
+
+    if (tipoDeVacuna === 'A') {
+      this.createVaccinated(persona);
+      this.deletingVaccinated(vaccinatedAux.id);
+    }
+
+    if (tipoDeVacuna === 'B' && vaccinatedAux.doses >= 2) {
+      this.createVaccinated(persona);
+      this.deletingVaccinated(vaccinatedAux.id);
+    }
+
+    if (tipoDeVacuna === 'C' && vaccinatedAux.doses >= 3) {
+      this.createVaccinated(persona);
+      this.deletingVaccinated(vaccinatedAux.id);
+    }
   }
 
+  createVaccinated(person: any) {
+    this.vacunadosService
+      .postVacunados({
+        name: person.name,
+        age: person.age,
+        date: person.date,
+        vaccined: 1,
+      })
+      .subscribe((res) => this.loadVaccinated());
+  }
 
+  deletingVaccinated(id: string) {
+    this.noVacunadosService
+      .deleteNoVacunados(id)
+      .subscribe((res) => this.loadNotVaccinated());
+  }
+
+  onEdit(product): void {
+    this.idEdit = product.id;
+    this.formValues = product;
+  }
+
+  onSave(data): void {
+    if (this.addMode) {
+      this.noVacunadosService
+        .postNoVacunados({
+          name: data.name,
+          age: data.age,
+          date: new Date(),
+          disease: data.disease,
+          vaccineType: data.vaccineType,
+          vaccined: 0,
+          doses: 0,
+        })
+        .subscribe(() => this.loadNotVaccinated());
+    } else {
+      this.noVacunadosService
+        .patchNoVacunados(this.idEdit, data)
+        .subscribe(() => this.loadNotVaccinated);
+    }
+  }
 }

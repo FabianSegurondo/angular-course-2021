@@ -1,0 +1,8 @@
+<div style="border: 1px solid black;" [style.background]="'green'">
+<p>name: {{ info.name | titlecase }}</p>
+<p>age: {{ info.age }}</p>
+<p>date: {{ info.date | date: 'yyy/MM/dd' }}</p>
+<p>vaccined: {{ info.vaccined }}</p>
+
+<ng-content> </ng-content>
+</div>

@@ -1,0 +1,13 @@
+<div style="border: 1px solid black;" [style.background]="'red'">
+<p>name: {{ info.name | titlecase }}</p>
+<p>age: {{ info.age }}</p>
+<p>date: {{ info.date | date: 'yyy/MM/dd' }}</p>
+<p>disease: {{ info.disease }}</p>
+<p>vaccineType: {{ info.vaccineType }}</p>
+<p>vaccined: {{ info.vaccined }}</p>
+<p>doses: {{ info.doses }}</p>
+<mat-card-actions style="background-color: white">
+  <button mat-button (click)="onEdit()">Edit</button>
+</mat-card-actions>
+<ng-content> </ng-content>
+</div>
