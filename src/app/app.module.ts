@@ -1,16 +1,19 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { WalletsComponent } from './wallets/wallets.component';
-import { TransactionsComponent } from './transactions/transactions.component';
-import { StrToDatePipe } from './str-to-date.pipe';
+import { BooltoStringPipe } from './pipes/boolToString.pipe';
+import { PersonComponent } from './persona/person.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule,HttpClientModule ],
-  declarations: [ AppComponent, WalletsComponent, TransactionsComponent, StrToDatePipe ],
-  bootstrap:    [ AppComponent ]
+  declarations: [
+    AppComponent,PersonComponent,BooltoStringPipe
+  ],
+  imports: [
+    BrowserModule, HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

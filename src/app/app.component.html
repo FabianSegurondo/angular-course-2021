@@ -1,41 +1,66 @@
-<p>BITCOIN-ETHERUM</p>
-<div *ngIf="transLeft()">
-<h2>
-  THERE ARE NOT TRANSACTIONS
-</h2>
-</div>
+<p style="font-family: sans-serif; font-size: 150%"  >VACUNAS</p>
 
-<div 
-
-      [style.background]=" 'blue' "
-      style="position: absolute; top: 10px; right: 10px; font-family: sans-serif; font-size: 100% ; color: white;  margin: 10px; padding: 10px; "
+<div *ngIf="!checkAllVac()"
+     [style.border]= "'3px solid blue'" 
+     [style.background]=" 'red' "
+      style="font-family: sans-serif; font-size: 150% ; color: white; float: left; margin: 10px; padding: 10px; "
 >
-  Total ETH {{setTotalETH()}} 
-  <blockquote></blockquote>
-  Total BTC {{setTotalBTC()}}
+  EVERYBODY VACCINATED!!
 </div>
 
+<p></p><br><br><br><br><br>
 
-<div>WALLETS</div>
+<div [style.border]= "'3px solid black'" 
+     [style.background]=" 'blue' "
+      style="float: left; top: 10px; right: 10px; font-family: sans-serif; font-size: 100% ; color: white;  margin: 10px; padding: 10px; ">Vaccinated <blockquote></blockquote> Total = {{numVac}}
+</div>
+<p></p><br><br><br><br><br>
+
 <div style="display: flex; flex-direction: row">
-<div *ngFor="let wallet of wallets">
-  <wallets [id]="wallet[0]" [wallet]="wallet[1]['wallet']" [name]="wallet[1]['name']" [eth]="wallet[1]['eth']" [btc]="wallet[1]['btc']">
-
-  </wallets>
+<div *ngFor="let person of vac">
+  <person 
+    [id]="person[0]" 
+    [name] = "person[1]['name']" 
+    [age]="person[1]['age']"  
+    [date]= "person[1]['date']"
+    [disease]= "person[1]['disease']" 
+    [vaccineType]= "person[1]['vaccineType']" 
+    [vaccined]= "person[1]['vaccined']" 
+    [doses]= "person[1]['doses']">
+  </person>
 </div>
 </div>
 
-<div>TRANSACTIONS</div>
+<div [style.border]= "'1px solid black'" 
+     [style.background]=" 'blue' "
+      style="float: left; top: 10px; right: 10px; font-family: sans-serif; font-size: 100% ; color: white;  margin: 10px; padding: 10px; ">Unvaccinated <blockquote></blockquote> Total = {{numUnvac}}
+</div>
+<p></p><br><br><br><br><br>
+
 <div style="display: flex; flex-direction: row">
-<div *ngFor="let transactions of transactions">
-  <transactions [id]="transactions[0]" [date]="(transactions[1]['date'] | strToDate)|date:'dd/MM/yyyy'" [from]="transactions[1]['from']"  [to]="transactions[1]['to']"  [quantity]="transactions[1]['quantity']"  [moneyType]="transactions[1]['moneyType']"  [mineType]="transactions[1]['mineType']"  [miner]="transactions[1]['miner']" >
-  <button
-  [disabled]="transactions[1]['mineType'] === 'PoS' &&
-  transactions[1]['miner'] < 20"
-(click)="onMine(transactions[0], transactions[1]['from'], transactions[1]['to'], transactions[1]['quantity'], transactions[1]['moneyType'])"
->Mine
-</button>
-
-  </transactions>
-</div>
+  <div *ngFor="let person of unvac">
+    <person 
+      [id]="person[0]" 
+      [name] = "person[1]['name']" 
+      [age]="person[1]['age']"  
+      [date]= "person[1]['date']"
+      [disease]= "person[1]['disease']" 
+      [vaccineType]= "person[1]['vaccineType']" 
+      [vaccined]= "person[1]['vaccined']" 
+      [doses]= "person[1]['doses']"
+    >
+      <button
+        [disabled]="person[1]['disease'] === true || person[1]['age'] < 18" 
+        (click)="vaccinate( person[0],
+                           person[1]['name'],
+                           person[1]['age'],
+                            person[1]['date'],
+                            person[1]['disease']
+                            ,person[1]['vaccined'],
+                            person[1]['doses'], 
+                            person[1]['vaccineType'])"
+      > Vaccinate
+      </button>
+    </person>
+  </div>
 </div>

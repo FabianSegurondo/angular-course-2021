@@ -1,98 +1,77 @@
-import { Component, VERSION } from '@angular/core';
-import { MinarService } from './minar.service';
+
+import { Component } from '@angular/core';
+import { VacunadosService} from './servicios/vacunados.service' ;
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ]
+  styleUrls: ['./app.component.scss']
 })
-
-export class AppComponent  {
-
-  wallets=[]
-  transactions=[]
-  btc = 0
-  eth = 0
-anyLeft = true;
-totalETH= 0;
-totalBTC= 0;
-
-  constructor(private fetcher:MinarService) { 
- 
-    this.fetcher.getWallets().subscribe(data => this.getDataWallets(data))
-    this.fetcher.getTransactions().subscribe(data => this.getDataTransactions(data))
+export class AppComponent {
+  vacunados=[];
+  unVacunados=[];
+  numVacunados=0;
+  numUnvacunados=0;
+  
+  constructor(private serv:VacunadosService){
+  this.vacunados=[]
+  this.unVacunados=[]
+  this.serv.getAllVac().subscribe(data => this.VacunadosDB(data))
+  this.serv.getAllUnvac().subscribe(data => this.UnvacunadosDB(data))
   }
 
-  getDataWallets(data){
-
-    this.wallets=Object.entries(data);
-    this.updateTotalMoney()
+  VacunadosDB(data:any){
+    this.vacunados=Object.entries(data);
+    this.checkState()
+    this.checkAllVac()
   }
 
-  getDataTransactions(data){
-
-    this.transactions=Object.entries(data);
-    this.transLeft()
+  UnvacunadosDB(data:any){
+    this.unVacunados=Object.entries(data);
+    this.checkState()
+    this.checkAllVac()
   }
-  setTotalETH() {
-    this.totalETH = 0;
-    for (let i = 0; i < this.wallets.length; i++) {
-      this.totalETH += this.wallets[i][1]['eth'];
+
+  checkState(){
+    this.numVacunados=0
+    this.numUnvacunados=0
+    this.numVacunados=this.vacunados.length
+    this.numUnvacunados=this.unVacunados.length
+  }
+
+  vacunar(id:any){
+    var personToBeVaccinated = this.unVacunados.find(person => person[0] === id)
+    console.log(personToBeVaccinated)
+    console.log(personToBeVaccinated[1]['doses'])
+    var currentDoses = personToBeVaccinated[1]['doses']+1
+    this.serv.updateVac(id,currentDoses).subscribe(res => console.log(res))
+
+    if(personToBeVaccinated[1]['vaccineType'] === "A" && currentDoses ===1){
+      this.serv.createPerson({"name":personToBeVaccinated[1]['name'],"age":personToBeVaccinated[1]['age'],"date":personToBeVaccinated[1]['date'],"disease":personToBeVaccinated[1]['disease'], "vaccineType":personToBeVaccinated[1]['vaccineType'],"vaccined":1,"doses":currentDoses}).subscribe(res => console.log(res))
+      this.serv.deletePerson(id).subscribe(res => console.log(res))
+    }else if(personToBeVaccinated[1]['vaccineType'] === "B"&& currentDoses ===2){
+      this.serv.createPerson({"name":personToBeVaccinated[1]['name'],"age":personToBeVaccinated[1]['age'],"date":personToBeVaccinated[1]['date'],"disease":personToBeVaccinated[1]['disease'], "vaccineType":personToBeVaccinated[1]['vaccineType'],"vaccined":1,"doses":currentDoses}).subscribe(res => console.log(res))
+      this.serv.deletePerson(id).subscribe(res => console.log(res))
+    }else if(personToBeVaccinated[1]['vaccineType'] === "C"&& currentDoses ===3){
+      this.serv.createPerson({"name":personToBeVaccinated[1]['name'],"age":personToBeVaccinated[1]['age'],"date":personToBeVaccinated[1]['date'],"disease":personToBeVaccinated[1]['disease'], "vaccineType":personToBeVaccinated[1]['vaccineType'],"vaccined":1,"doses":currentDoses}).subscribe(res => console.log(res))
+      this.serv.deletePerson(id).subscribe(res => console.log(res))
     }
-    return this.totalETH;
-  }
-  setTotalBTC() {
-    this.totalBTC = 0;
-    for (let i = 0; i < this.wallets.length; i++) {
-      this.totalBTC += this.wallets[i][1]['btc'];
-    }
-    return this.totalBTC;
-  }
+    
+    this.vacunados=[]
+    this.unVacunados=[]
 
-  printThis(){
-    console.log(this.wallets)
-  }
-
-  onMine(idTrans, from, to, quantity, moneyType){
-    var personFrom = this.wallets.filter(item => item[1]["wallet"] == from)
-    var personTo = this.wallets.filter(item => item[1]["wallet"] == to)
-    var newQuantPerFrom = personFrom[0][1][moneyType] - quantity
-    var newQuantPerTo = personTo[0][1][moneyType] + quantity
-
-    console.log(newQuantPerFrom)
-    console.log(newQuantPerTo)
-
-    if(moneyType === "btc"){
-      this.fetcher.mineBTC(personFrom[0][0],newQuantPerFrom).subscribe(res => console.log(res))
-      this.fetcher.mineBTC(personTo[0][0],newQuantPerTo).subscribe(res => console.log(res))
-    }else{
-      this.fetcher.mineETH(personFrom[0][0],newQuantPerFrom).subscribe(res => console.log(res))
-      this.fetcher.mineETH(personTo[0][0],newQuantPerTo).subscribe(res => console.log(res))
-    }
-
-    this.fetcher.delete(idTrans).subscribe(res=>console.log(res))
-    this.fetcher.getWallets().subscribe(data => this.getDataWallets(data))
-    this.fetcher.getTransactions().subscribe(data => this.getDataTransactions(data))
-
-    this.updateTotalMoney();
-    window.location.reload();
+    this.serv.getAllVac().subscribe(data => this.VacunadosDB(data))
+    this.serv.getAllUnvac().subscribe(data => this.UnvacunadosDB(data))
+    this.checkAllVac()
     
 
+
+    window.location.reload();
   }
 
-  updateTotalMoney(){
-    console.log(this.wallets)
-    this.eth = 0
-    this.btc = 0
-    for(var i in this.wallets){
-      this.eth = this.wallets[i][1]["eth"] + this.eth
-      this.btc = this.wallets[i][1]["btc"] + this.btc
-
-    }
+  checkAllVac():boolean{
+    return this.unVacunados.find(person => person[1]['disease'] === false && person[1]['age'] >=18 ) !==undefined
   }
 
-  transLeft():boolean{
-    return this.transactions.find(item => item[1]['mineType'] !== 'PoS' ||
-    item[1]['miner'] > 20) === undefined
-  }
+
 }
