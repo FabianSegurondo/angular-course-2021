@@ -13,12 +13,18 @@ export class HomeComponent implements OnInit {
               private homeService: HomeService) { }
 
   ngOnInit(): void {
+
     this.homeService.currentLoad().pipe(filter(s => s === true))
       .subscribe(s => this.loadData())
-    this.loadData();
+
+
+this.loadData();
   }
+
   onShowMessage():void{
   }
+
+
   loadData(){
     this.publicationService.getAll().subscribe(res => {
 
@@ -27,4 +33,5 @@ export class HomeComponent implements OnInit {
 
     })
   }
+
 }
