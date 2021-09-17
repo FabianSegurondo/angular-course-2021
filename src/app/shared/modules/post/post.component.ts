@@ -11,7 +11,7 @@ export class PostComponent implements OnInit {
   @Input() idUser: string|undefined;
   @Input() imageUrl: string|undefined;
   @Input() userPhotoUrl: string|undefined;
-  @Input() data
+
   @Input() data: any
 
   constructor() { }
