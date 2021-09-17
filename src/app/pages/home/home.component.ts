@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {PublicationService} from "../shared/services/publication.service";
 import {filter} from "rxjs/operators";
 import {HomeService} from "./home.service";
@@ -8,7 +8,7 @@ import {HomeService} from "./home.service";
 export class HomeComponent implements OnInit {
 
   posts:any[] = [];
-
+  @Input() data
   constructor(private publicationService: PublicationService,
               private homeService: HomeService) { }
 

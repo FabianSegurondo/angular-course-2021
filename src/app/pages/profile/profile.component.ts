@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {PublicationService} from "../shared/services/publication.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AuthService} from "../../core/services/auth.service";
@@ -12,7 +12,7 @@ import {filter} from "rxjs/operators";
 export class ProfileComponent implements OnInit {
 
   posts:any [] = []
-
+  @Input() data
   constructor(private publicationService: PublicationService,
               private matDialog: MatDialog,
               private authService: AuthService,
