@@ -12,7 +12,7 @@ import {filter} from "rxjs/operators";
 export class ProfileComponent implements OnInit {
 
   posts:any [] = []
-  @Input() data
+  
   constructor(private publicationService: PublicationService,
               private matDialog: MatDialog,
               private authService: AuthService,

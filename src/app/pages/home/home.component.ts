@@ -8,7 +8,7 @@ import {HomeService} from "./home.service";
 export class HomeComponent implements OnInit {
 
   posts:any[] = [];
-  @Input() data
+
   constructor(private publicationService: PublicationService,
               private homeService: HomeService) { }
 
